@@ -23,7 +23,12 @@ public class UriExtractor {
         }
         UriBuilder builder = new UriBuilder();
         maybeAppendPath(builder, classLevelUri);
-        return builder.toString();
+        // Changes for removing *
+        String str = builder.toString();
+        if(str.contains("/*/")) {
+            str = str.substring(0, str.indexOf("/*/")+1) + str.substring(str.indexOf("/*/")+3);
+        }
+        return str;
     }
 
     public static String getMethodLevelUri(Class<?> controllerClass, HandlerMethod handlerMethod) {
@@ -39,7 +44,12 @@ public class UriExtractor {
 
         maybeAppendPath(builder, classLevelUri);
         maybeAppendPath(builder, methodLevelUri);
-        return builder.toString();
+        // Changes for removing *
+        String str = builder.toString();
+        if(str.contains("/*/")) {
+            str = str.substring(0, str.indexOf("/*/")+1) + str.substring(str.indexOf("/*/")+3);
+        }
+        return str;
     }
 
     private static void maybeAppendPath(UriBuilder builder, String toAppendUri) {
